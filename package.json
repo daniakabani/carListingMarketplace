@@ -1,0 +1,39 @@
+{
+  "name": "car-listing-marketplace",
+  "version": "1.0.0",
+  "description": "SoCar business scenario test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "cd main/backend && npm run migrate",
+    "rollback": "cd main/backend && npm run rollback",
+    "reset": "npm run rollback && npm run migrate",
+    "start": "node main/backend/web/www.js",
+    "dev": "nodemon main/backend/web/www.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/daniakabani/carListingMarketplace.git"
+  },
+  "keywords": [
+    "car",
+    "marketplace"
+  ],
+  "author": "dani alakabani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daniakabani/carListingMarketplace/issues"
+  },
+  "homepage": "https://github.com/daniakabani/carListingMarketplace#readme",
+  "dependencies": {
+    "daniakabani": "./main/backend",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "knex": "^0.21.12",
+    "objection": "^2.2.3",
+    "pg": "^8.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}

@@ -1,0 +1,15 @@
+# package directories
+node_modules/*
+main/node_modules/*
+main/project/node_modules/*
+
+# webstorm
+.idea
+
+.env
+.docker-sync/daemon.log
+main/authenticator/.DS_Store
+# node reports
+report.*.json
+.DS_Store
+main/coverage/*
