@@ -9,7 +9,8 @@
     "rollback": "cd main/backend && npm run rollback",
     "reset": "npm run rollback && npm run migrate",
     "start": "node main/backend/web/www.js",
-    "dev": "nodemon main/backend/web/www.js"
+    "dev": "nodemon main/backend/web/www.js",
+    "app": "cd main/frontend && npm start"
   },
   "repository": {
     "type": "git",
