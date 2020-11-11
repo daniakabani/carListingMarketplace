@@ -1,27 +1,47 @@
 const UsersModel = require('daniakabani/models/users'),
-  { randomGenerator } = require('daniakabani/helpers')
+  bcrypt = require('bcrypt'),
+  { randomGenerator } = require('daniakabani/helpers');
 
 exports.getAll = () => {
   return UsersModel.query()
+    .allowGraph('role')
+    .withGraphFetched('role')
     .whereNull('users.deleted_at');
 };
 
 exports.getByID = ({ id }) => {
   return UsersModel.query()
+    .allowGraph('role')
+    .withGraphFetched('role')
     .findById(id)
     .whereNull('users.deleted_at')
     .throwIfNotFound();
 };
 
-exports.create = ({ name, role, tag, car_id }) => {
+exports.create = async ({ username, role_id, tag, password }) => {
+  let hashedPassword = await bcrypt.hashSync(password, 6);
   return UsersModel.query()
     .insert({
-      name,
-      role,
-      tag,
-      car_id
+      username,
+      password: hashedPassword,
+      role_id,
+      tag
     });
 };
+
+exports.login = async ({ username, password }) => {
+  let user = await UsersModel.query().whereNull('users.deleted_at').where('username', username).throwIfNotFound();
+  let validatePassword = bcrypt.compareSync(password, user[0].password);
+  if (validatePassword) {
+    return true;
+  } else {
+    throw {
+      errorCode: "unauthorised",
+      status: 403,
+      message: 'Invalid credentials provided, please try again'
+    }
+  }
+}
 
 exports.delete = async ({ id }) => {
   const user = await UsersModel.query().whereNull('users.deleted_at').findById(id).throwIfNotFound();
@@ -29,19 +49,18 @@ exports.delete = async ({ id }) => {
     .whereNull('users.deleted_at')
     .findById(id)
     .patch({
-      name: `${user.name}_DELETED_${await randomGenerator()}`,
+      username: `${user.username}_DELETED_${await randomGenerator()}`,
       deleted_at: new Date()
     });
 };
 
-exports.update = ({ id, name, role, tag, car_id }) => {
+exports.update = ({ id, username, role_id, tag }) => {
   return UsersModel.query()
     .whereNull('users.deleted_at')
     .patchAndFetchById(id, {
-      name,
-      role,
+      username,
+      role_id,
       tag,
-      car_id
     })
     .throwIfNotFound();
 };

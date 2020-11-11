@@ -8,6 +8,7 @@ const APIV1Routes = express.Router(),
 
 // users routes here
 APIV1Routes.get('/users', expressCallback(UsersController.getAll));
+APIV1Routes.post('/users/login', expressCallback(UsersController.login));
 APIV1Routes.get('/users/:id', expressCallback(UsersController.getByID));
 APIV1Routes.post('/users', expressCallback(UsersController.create));
 APIV1Routes.post('/users/:id', expressCallback(UsersController.update));
@@ -23,8 +24,8 @@ APIV1Routes.delete('/cars/:id', expressCallback(CarsController.delete));
 // listings routes here
 APIV1Routes.get('/listings', expressCallback(ListingsController.getAll));
 APIV1Routes.get('/listings/:id', expressCallback(ListingsController.getByID));
-APIV1Routes.post('/listings', expressCallback(ListingsController.create));
 APIV1Routes.post('/listings/:id', expressCallback(ListingsController.update));
+APIV1Routes.post('/listings', expressCallback(ListingsController.create));
 APIV1Routes.delete('/listings/:id', expressCallback(ListingsController.delete));
 
 module.exports = APIV1Routes;

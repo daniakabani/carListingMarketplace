@@ -1,7 +1,16 @@
-const CarsService = require('daniakabani/services/cars');
+const CarsService = require('daniakabani/services/cars'),
+  {
+    create: carCreateSchema,
+    getByID: carGetByIDSchema,
+    getAll: carGetAllSchema,
+    update: carUpdateSchema,
+    delete: carDeleteSchema
+  } = require('daniakabani/schemas/cars'),
+  { schemaValidator } = require('daniakabani/helpers');
 
 exports.getAll = async (req, res) => {
   const { include } = req.query;
+  await schemaValidator(carGetAllSchema, req.query);
   let getAllCars = await CarsService.getAll({
     include
   });
@@ -10,14 +19,16 @@ exports.getAll = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const { brand = null, model = null, year = null, day_price = null, featured = null, geo_location = null } = req.body;
+  const { brand = null, model = null, year = null, day_price = null, featured = null, geo_location = null, user_id = null } = req.body;
+  await schemaValidator(carCreateSchema, req.body);
   let createCar = await CarsService.create({
     brand,
     model,
     year,
     day_price,
     featured,
-    geo_location
+    geo_location,
+    user_id
   });
   res.status(201);
   return createCar
@@ -25,6 +36,7 @@ exports.create = async (req, res) => {
 
 exports.getByID = async (req, res) => {
   const { id } = req.params;
+  await schemaValidator(carGetByIDSchema, req.params);
   let getCarByID = await CarsService.getByID({
     id
   });
@@ -34,7 +46,11 @@ exports.getByID = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { id } = req.params;
-  const { brand = null, model = null, year = null, day_price = null, featured = null, geo_location = null } = req.body;
+  const { brand = null, model = null, year = null, day_price = null, featured = null, geo_location = null, user_id = null } = req.body;
+  await schemaValidator(carUpdateSchema, {
+    ...req.params,
+    ...req.body
+  });
   let updateCar = await CarsService.update({
     id,
     brand,
@@ -42,7 +58,8 @@ exports.update = async (req, res) => {
     year,
     day_price,
     featured,
-    geo_location
+    geo_location,
+    user_id
   });
   res.status(200);
   return updateCar;
@@ -50,6 +67,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   const { id } = req.params;
+  await schemaValidator(carDeleteSchema, req.params);
   await CarsService.delete({ id });
   res.status(200);
   return "successfully deleted car";

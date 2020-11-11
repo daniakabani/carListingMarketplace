@@ -3,15 +3,15 @@ const ListingsModel = require('daniakabani/models/listings'),
 
 exports.getAll = ({ include }) => {
   return ListingsModel.query()
-    .allowGraph('[user]')
+    .allowGraph('[car]')
     .withGraphFetched(include)
     .whereNull('listings.deleted_at');
 };
 
 exports.getByID = ({ id }) => {
   return ListingsModel.query()
-    .allowGraph('[user]')
-    .withGraphFetched('user')
+    .allowGraph('[car]')
+    .withGraphFetched('car')
     .findById(id)
     .whereNull('listings.deleted_at')
     .throwIfNotFound();
@@ -27,12 +27,11 @@ exports.create = ({ end_at, start_at, car_id }) => {
 };
 
 exports.delete = async ({ id }) => {
-  const listing = await ListingsModel.query().whereNull('listings.deleted_at').findById(id).throwIfNotFound();
+  await ListingsModel.query().whereNull('listings.deleted_at').findById(id).throwIfNotFound();
   return ListingsModel.query()
     .whereNull('listings.deleted_at')
     .findById(id)
     .patch({
-      name: `${listing.name}_DELETED_${await randomGenerator()}`,
       deleted_at: new Date()
     });
 };

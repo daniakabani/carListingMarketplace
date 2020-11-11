@@ -17,7 +17,7 @@ exports.getByID = ({ id }) => {
     .throwIfNotFound();
 };
 
-exports.create = ({ brand, model, year, day_price, featured, geo_location }) => {
+exports.create = ({ brand, model, year, day_price, featured, geo_location, user_id }) => {
   return CarsModel.query()
     .insert({
       brand,
@@ -25,14 +25,15 @@ exports.create = ({ brand, model, year, day_price, featured, geo_location }) => 
       year,
       day_price,
       featured,
-      geo_location
+      geo_location: JSON.stringify(geo_location),
+      user_id
     });
 };
 
 exports.delete = async ({ id }) => {
   const user = await CarsModel.query().whereNull('cars.deleted_at').findById(id).throwIfNotFound();
   return CarsModel.query()
-    .whereNull('users.deleted_at')
+    .whereNull('cars.deleted_at')
     .findById(id)
     .patch({
       name: `${user.name}_DELETED_${await randomGenerator()}`,
@@ -40,7 +41,7 @@ exports.delete = async ({ id }) => {
     });
 };
 
-exports.update = ({ id, brand, model, year, day_price, featured, geo_location }) => {
+exports.update = ({ id, brand, model, year, day_price, featured, geo_location, user_id }) => {
   return CarsModel.query()
     .whereNull('cars.deleted_at')
     .patchAndFetchById(id, {
@@ -49,7 +50,8 @@ exports.update = ({ id, brand, model, year, day_price, featured, geo_location })
       year,
       day_price,
       featured,
-      geo_location
+      geo_location: JSON.stringify(geo_location),
+      user_id
     })
     .throwIfNotFound();
 };

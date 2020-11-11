@@ -1,4 +1,4 @@
-const Model = require('./');
+const Model = require('./base');
 
 class Listings extends Model {
   static tableName = 'listings';
@@ -16,14 +16,14 @@ class Listings extends Model {
   }
 
   static get relationMappings() {
-    const User = require('./users');
+    const Car = require('./cars');
     return {
-      user: {
+      car: {
         relation: Model.BelongsToOneRelation,
-        modelClass: User,
+        modelClass: Car,
         join: {
-          from: 'listings.user_id',
-          to: 'users.id'
+          from: 'listings.car_id',
+          to: 'cars.id'
         }
       }
     }

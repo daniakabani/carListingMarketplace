@@ -36,7 +36,10 @@ exports.expressCallback = (controller) => {
         res.status(409).send({
           message: e.nativeError.detail
         });
-      } else {
+      } else if (e.name === 'Validation Error') {
+        res.status(400).send(e.content)
+      }
+      else {
         console.error(e);
         res.status(500).send({
           message: 'Whoops looks like we are having some troubles, please try again later, or contact support for more info'
@@ -44,4 +47,28 @@ exports.expressCallback = (controller) => {
       }
     }
   };
+};
+
+exports.schemaValidator = async (schema, body) => {
+  try {
+    return await schema.schema().validateAsync(body, { abortEarly: false });
+  } catch (e) {
+    console.log(e);
+    let error = e.details;
+    let errorArray = [];
+    error.map(error => {
+      errorArray.push({
+        code: 400,
+        title: 'Validation Error',
+        details: error.message
+      });
+    });
+    throw {
+      name: 'Validation Error',
+      content: {
+        message: 'validation error',
+        reason: errorArray
+      }
+    };
+  }
 };
