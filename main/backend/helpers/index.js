@@ -22,7 +22,7 @@ exports.expressCallback = (controller) => {
     } catch (e) {
       if (e instanceof NotFoundError) {
         res.status(404).send({
-          message: 'unable to find the requested resource, please try again',
+          message: 'unable to find the requested resource, make sure you have a valid ID',
           error: e
         })
       }
@@ -39,7 +39,7 @@ exports.expressCallback = (controller) => {
       } else {
         console.error(e);
         res.status(500).send({
-          message: 'unknown error occurred, contact support'
+          message: 'Whoops looks like we are having some troubles, please try again later, or contact support for more info'
         });
       }
     }

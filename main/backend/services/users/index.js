@@ -1,17 +1,13 @@
 const UsersModel = require('daniakabani/models/users'),
   { randomGenerator } = require('daniakabani/helpers')
 
-exports.getAll = ({ include }) => {
+exports.getAll = () => {
   return UsersModel.query()
-    .allowGraph('[car]')
-    .withGraphJoined(include)
     .whereNull('users.deleted_at');
 };
 
-exports.getByID = ({ id, include }) => {
+exports.getByID = ({ id }) => {
   return UsersModel.query()
-    .allowGraph('[car]')
-    .withGraphJoined(include)
     .findById(id)
     .whereNull('users.deleted_at')
     .throwIfNotFound();

@@ -3,6 +3,7 @@ exports.up = function(knex) {
   return knex.schema.createTable('cars', function (table) {
     table.increments('id').primary();
     table.string('brand').index();
+    table.integer('user_id').unsigned().references('users.id').onDelete('CASCADE');
     table.string('model');
     table.integer('year');
     table.integer('day_price');

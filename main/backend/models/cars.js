@@ -22,8 +22,8 @@ class Cars extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'cars.id',
-          to: 'users.car_id'
+          from: 'cars.user_id',
+          to: 'users.id'
         }
       }
     }

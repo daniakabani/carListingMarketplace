@@ -1,44 +1,54 @@
 const UsersService = require('daniakabani/services/users');
 
-exports.getAll = async (req) => {
+exports.getAll = async (req, res) => {
   const { include } = req.query;
-  return UsersService.getAll({
+  let getAllUsers = await UsersService.getAll({
     include
   });
+  res.status(200);
+  return getAllUsers;
 };
 
-exports.create = async (req) => {
+exports.create = async (req, res) => {
   const { name = null, tag = null, role = null, car_id = null } = req.body;
-  return UsersService.create({
+  let createUser = await UsersService.create({
     name,
     tag,
     role,
     car_id
   });
+  res.status(201);
+  return createUser
 };
 
-exports.getByID = async (req) => {
+exports.getByID = async (req, res) => {
   const { id } = req.params;
   const { include } = req.query;
-  return UsersService.getByID({
+  let getUserByID = await UsersService.getByID({
     id,
     include
   });
+  res.status(200);
+  return getUserByID;
 };
 
-exports.update = async (req) => {
+exports.update = async (req, res) => {
   const { id } = req.params;
   const { name = null, tag = null, role = null, car_id = null } = req.body;
-  return UsersService.update({
+  let updateUser = await UsersService.update({
     id,
     name,
     tag,
     role,
     car_id
   });
+  res.status(200);
+  return updateUser;
 };
 
-exports.delete = async (req) => {
+exports.delete = async (req, res) => {
   const { id } = req.params;
-  return UsersService.delete({ id });
+  let deleteUser = await UsersService.delete({ id });
+  res.status(200);
+  return deleteUser;
 }

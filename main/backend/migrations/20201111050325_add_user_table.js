@@ -5,8 +5,6 @@ exports.up = function(knex) {
     table.string('name', 255).notNullable().unique().index();
     table.string('role');
     table.string('tag');
-    table.integer('car_id').unsigned().references('cars.id');
-    table.integer('listing_id').unsigned().references('listings.id');
     table.timestamp('created_at');
     table.timestamp('updated_at');
     table.timestamp('deleted_at');
