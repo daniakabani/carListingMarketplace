@@ -2,12 +2,14 @@ const UsersModel = require('daniakabani/models/users'),
   bcrypt = require('bcrypt'),
   { randomGenerator } = require('daniakabani/helpers');
 
-exports.getAll = ({ page = 1, page_size = 10, username = null }) => {
+exports.getAll = ({ page = 1, page_size = 10, username = null, admins = false, users }) => {
   let result = UsersModel.query()
     .allowGraph('role')
     .withGraphFetched('role')
     .whereNull('users.deleted_at');
   username && result.where('username', 'like', username);
+  admins === 'true' && result.where('role_id', 1);
+  users === 'true' && result.where('role_id', '!=', 1)
   result.orderBy('id', 'asc');
   result.page(Number(page) - 1, page_size);
   return result;

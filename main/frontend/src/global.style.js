@@ -10,7 +10,7 @@ const GlobalStyle = styled.div`{
       max-width: 600px;
       width: 100%;
       left: 50%;
-      top: 35%;
+      top: 20%;
       padding: 20px;
       border-radius: 7px;
       transform: translateX(-50%);
@@ -54,8 +54,17 @@ const GlobalStyle = styled.div`{
           text-transform: capitalize;
          margin-bottom: 20px; 
         }
-        input {
-          max-width: 300px;
+        .actions {
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+          div {
+            max-width: 300px;
+            margin-right: 30px;
+          }
+          input {
+            max-width: 300px;
+          }
         }
       }
       .list-view {
@@ -80,11 +89,24 @@ const GlobalStyle = styled.div`{
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
             &:hover {
               transform: translate(-10px, -10px);
             }
             h2, h3 {
               text-transform: capitalize;
+            }
+            .featured {
+              background-color: #2ecc71;
+              padding: 10px 20px;
+              border-radius: 8px;
+              width: 100%;
+              text-align: center;
+              position: absolute;
+              top: 10%;
+              transform: rotate(-45deg);
+              left: -30%;
             }
             .actions {
               display: flex;
@@ -133,7 +155,7 @@ const GlobalStyle = styled.div`{
         max-width: 600px;
         width: 100%;
         left: 50%;
-        top: 35%;
+        top: 20%;
         padding: 20px;
         border-radius: 7px;
         transform: translateX(-50%);

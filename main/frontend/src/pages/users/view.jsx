@@ -36,7 +36,7 @@ const UsersView = () => {
       <div id="main">
         <div className="content">
           <header>
-            <h1>{isLoading ? "Loading..." : "User View"}</h1>
+            <h1>{isLoading ? "Loading..." : "User Details"}</h1>
           </header>
           <div className="view-data">
             <ul>

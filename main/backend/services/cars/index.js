@@ -45,7 +45,7 @@ exports.delete = async ({ id }) => {
     });
 };
 
-exports.update = ({ id, brand, model, year, day_price, featured, geo_location, user_id }) => {
+exports.update = ({ id, brand, model, year, day_price, featured, geo_location }) => {
   return CarsModel.query()
     .whereNull('cars.deleted_at')
     .patchAndFetchById(id, {
@@ -54,8 +54,7 @@ exports.update = ({ id, brand, model, year, day_price, featured, geo_location, u
       year,
       day_price,
       featured,
-      geo_location: JSON.stringify(geo_location),
-      user_id
+      geo_location: JSON.stringify(geo_location)
     })
     .throwIfNotFound();
 };

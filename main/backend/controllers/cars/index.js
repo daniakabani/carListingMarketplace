@@ -54,7 +54,7 @@ exports.getByID = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { id } = req.params;
-  const { brand = null, model = null, year = null, day_price = null, featured = null, geo_location = null, user_id = null } = req.body;
+  const { brand = null, model = null, year = null, day_price = null, featured = null, geo_location = null } = req.body;
   await schemaValidator(carUpdateSchema, {
     ...req.params,
     ...req.body
@@ -66,8 +66,7 @@ exports.update = async (req, res) => {
     year,
     day_price,
     featured,
-    geo_location,
-    user_id
+    geo_location
   });
   res.status(200);
   return updateCar;

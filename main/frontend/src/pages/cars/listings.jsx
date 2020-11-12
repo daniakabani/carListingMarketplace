@@ -65,60 +65,55 @@ const CarList = () => {
     }, 400);
   };
 
-  if (role === "super_user") {
-    return (
-      <div id="main">
-        <div className="content">
-          <header>
-            <h1>Available Users</h1>
-            <Link to='/users/new'>Create new user</Link>
-          </header>
-          <div className="filters">
-            <h3>Filters</h3>
-            <InputField placeHolder="search for a brand" name="username" onChange={e => handleSearch(e?.target?.value)}/>
+  return (
+    <div id="main">
+      <div className="content">
+        <header>
+          <h1>Available Cars</h1>
+          {role === "super_user" && <Link to='/cars/new'>Register a new car</Link>}
+        </header>
+        <div className="filters">
+          <h3>Filters</h3>
+          <div className="actions">
+            <InputField placeHolder="search for a name" name="username" onChange={e => handleSearch(e?.target?.value)}/>
           </div>
-          <div className="list-view">
-            {isLoading ? <h1>Loading...</h1> :
-              (<ul className="api-data">
-                {data?.map((item, key) => (
-                  <li key={key}>
-                    <h2>{item?.brand}</h2>
-                    <h3>{item?.model}</h3>
-                    <div className="actions">
-                      <Button onClick={() => handleRedirects(`cars/${item?.id}`)} success content="view"/>
-                      <Button onClick={() => handleRedirects(`cars/${item?.id}/edit`)} warning content="edit"/>
-                      <Button danger content="delete"/>
+        </div>
+        <div className="list-view">
+          {isLoading ? <h1>Loading...</h1> :
+            (<ul className="api-data">
+              {data?.map((item, key) => (
+                <li key={key}>
+                  <h2>{item?.brand}</h2>
+                  <h3>{item?.model}</h3>
+                  {item?.featured && (
+                    <div className="featured">
+                      Featured
                     </div>
-                  </li>
-                ))}
-              </ul>)
-            }
-            <ReactPaginate
-              previousLabel={'previous'}
-              nextLabel={'next'}
-              breakLabel={'...'}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={10}
-              activeClassName={'active'}
-              containerClassName="pagination"
-              onPageChange={({ selected }) => handlePageChange(selected)}
-            />
-          </div>
+                  )}
+                  <div className="actions">
+                    <Button onClick={() => handleRedirects(`cars/${item?.id}`)} success content="view"/>
+                    {role === "super_user" && <Button onClick={() => handleRedirects(`cars/${item?.id}/edit`)} warning content="edit"/>}
+                    {role === "super_user" && <Button danger content="delete"/>}
+                  </div>
+                </li>
+              ))}
+            </ul>)
+          }
+          <ReactPaginate
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            breakLabel={'...'}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={10}
+            activeClassName={'active'}
+            containerClassName="pagination"
+            onPageChange={({ selected }) => handlePageChange(selected)}
+          />
         </div>
       </div>
-    )
-  } else {
-    return (
-      <div id="main">
-        <div className="content">
-          <div className="list-view">
-            <h1>Access denied.</h1>
-          </div>
-        </div>
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default CarList;

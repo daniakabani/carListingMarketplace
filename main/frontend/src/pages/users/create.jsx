@@ -80,7 +80,7 @@ const UsersCreate = () => {
     return (
       <div id="main">
         <div className="form-wrapper">
-          <h1>Create new user</h1>
+          <h1>Register a new user</h1>
           <form onSubmit={e => handleFormSubmit(e)}>
             <InputField name="username" placeHolder="Your Username" required/>
             <InputField name="password" placeHolder="Your Password" type="password" required/>

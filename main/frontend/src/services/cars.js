@@ -7,6 +7,32 @@ const getAllCars = (brand = "", page = 1) => {
   });
 };
 
+const getCarByID = id => {
+  return HttpClient({
+    path: `cars/${id}`,
+    method: 'GET'
+  });
+};
+
+const createCar = body => {
+  return HttpClient({
+    path: `cars`,
+    method: 'POST',
+    body
+  });
+};
+
+const editCar = ({ id, body }) => {
+  return HttpClient({
+    path: `cars/${id}`,
+    method: 'POST',
+    body
+  });
+}
+
 export {
-  getAllCars
+  getAllCars,
+  getCarByID,
+  createCar,
+  editCar
 }

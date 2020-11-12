@@ -8,9 +8,9 @@ const Login = body => {
   })
 };
 
-const getAllUsers = (username = "", page = 1) => {
+const getAllUsers = ({ username = "", page = 1, admins = false, users = false, page_size = 10 }) => {
   return HttpClient({
-    path: `users?page_size=10&page=${page}&username=${username}`,
+    path: `users?page_size=${page_size}&page=${page}&username=${username}&admins=${admins}&users=${users}`,
     method: 'GET'
   });
 };

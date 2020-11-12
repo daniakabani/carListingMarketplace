@@ -8,6 +8,9 @@ import UsersCreate from "./pages/users/create";
 import UsersEdit from "./pages/users/edit";
 import UsersView from "./pages/users/view";
 import CarList from "./pages/cars/listings";
+import CarView from "./pages/cars/view";
+import CarCreate from "./pages/cars/create";
+import CarEdit from "./pages/cars/edit";
 
 const Routes = () => {
   return(
@@ -33,6 +36,15 @@ const Routes = () => {
         </PrivateRoute>
         <PrivateRoute exact path="/cars">
           <CarList />
+        </PrivateRoute>
+        <PrivateRoute exact path="/cars/new">
+          <CarCreate />
+        </PrivateRoute>
+        <PrivateRoute exact path="/cars/:id">
+          <CarView />
+        </PrivateRoute>
+        <PrivateRoute exact path="/cars/:id/edit">
+          <CarEdit />
         </PrivateRoute>
         <Route>
           <NotFount />

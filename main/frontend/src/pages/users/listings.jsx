@@ -5,6 +5,8 @@ import context from "../../providers/context";
 import Button from "../../components/button";
 import ReactPaginate from "react-paginate";
 import InputField from "../../components/inputField";
+import Toggle from "react-toggle";
+import "react-toggle/style.css"
 
 let searchTimeOut;
 const UsersList = () => {
@@ -15,15 +17,17 @@ const UsersList = () => {
     data: null,
     currentPage: 1,
     pageCount: 1,
-    nameFilter: ''
+    nameFilter: '',
+    adminsView: false,
+    usersView: false
   });
-  const { isLoading, data, currentPage, pageCount, nameFilter } = state;
+  const { isLoading, data, currentPage, pageCount, nameFilter, adminsView, usersView } = state;
   useEffect(() => {
     setState({
       ...state,
       data: null
     });
-    getAllUsers(nameFilter, currentPage)
+    getAllUsers({ username: nameFilter, page: currentPage, admins: adminsView, users: usersView })
       .then(response => {
         setState({
           ...state,
@@ -35,7 +39,7 @@ const UsersList = () => {
       .catch(e => {
         console.error(e);
       })
-  }, [currentPage, nameFilter]);
+  }, [currentPage, nameFilter, adminsView, usersView]);
 
   const handleRedirects = location => {
     history.push(`/${location}`);
@@ -65,6 +69,13 @@ const UsersList = () => {
     }, 400);
   };
 
+  const handleToggles = (value, target) => {
+    setState({
+      ...state,
+      [target]: value
+    })
+  }
+
   if (role === "super_user") {
     return (
       <div id="main">
@@ -75,7 +86,24 @@ const UsersList = () => {
           </header>
           <div className="filters">
             <h3>Filters</h3>
-            <InputField placeHolder="search for a name" name="username" onChange={e => handleSearch(e?.target?.value)}/>
+            <div className="actions">
+              <InputField placeHolder="search for a name" name="username"
+                          onChange={e => handleSearch(e?.target?.value)}/>
+              <div className="toggles">
+                <h5>Admins Only view</h5>
+                <Toggle
+                  defaultChecked={false}
+                  onChange={e => handleToggles(e.target.checked, 'adminsView')}
+                />
+              </div>
+              <div className="toggles">
+                <h5>Users Only view</h5>
+                <Toggle
+                  defaultChecked={false}
+                  onChange={e => handleToggles(e.target.checked, 'usersView')}
+                />
+              </div>
+            </div>
           </div>
           <div className="list-view">
             {isLoading ? <h1>Loading...</h1> :
