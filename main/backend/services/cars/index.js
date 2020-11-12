@@ -1,11 +1,15 @@
 const CarsModel = require('daniakabani/models/cars'),
   { randomGenerator } = require('daniakabani/helpers')
 
-exports.getAll = ({ include }) => {
-  return CarsModel.query()
+exports.getAll = ({ include, page, page_size, brand }) => {
+  let result =  CarsModel.query()
     .allowGraph('[user]')
     .withGraphFetched(include)
     .whereNull('cars.deleted_at');
+  brand && result.where('brand', 'ilike', brand);
+  result.orderBy('id', 'asc');
+  result.page(Number(page) - 1, page_size);
+  return result;
 };
 
 exports.getByID = ({ id }) => {

@@ -66,7 +66,7 @@ exports.schemaValidator = async (schema, body) => {
     throw {
       name: 'Validation Error',
       content: {
-        message: 'validation error',
+        error: 'validation error',
         reason: errorArray
       }
     };

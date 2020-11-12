@@ -1,7 +1,7 @@
 import React from "react";
 
-const UsersEdit = () => {
+const CarEdit = () => {
   return <h1>users edit here</h1>;
 }
 
-export default UsersEdit;
+export default CarEdit;

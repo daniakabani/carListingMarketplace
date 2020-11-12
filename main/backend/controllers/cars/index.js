@@ -9,13 +9,21 @@ const CarsService = require('daniakabani/services/cars'),
   { schemaValidator } = require('daniakabani/helpers');
 
 exports.getAll = async (req, res) => {
-  const { include } = req.query;
+  const { page_size: pageSize, page: pageNumber, brand } = req.query;
   await schemaValidator(carGetAllSchema, req.query);
   let getAllCars = await CarsService.getAll({
-    include
+    page_size: pageSize,
+    page: pageNumber,
+    brand
   });
   res.status(200);
-  return getAllCars;
+  return {
+    ...getAllCars,
+    total: getAllCars.total,
+    page_size: pageSize,
+    page: pageNumber,
+    page_count: Math.ceil(getAllCars.total / pageSize)
+  };
 };
 
 exports.create = async (req, res) => {

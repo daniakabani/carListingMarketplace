@@ -11,6 +11,16 @@ exports.create = {
   }
 };
 
+exports.getAll = {
+  schema: () => {
+    return joi.object().keys({
+      username: joi.string().optional().allow(''),
+      page: joi.number().positive().optional(),
+      page_size: joi.number().positive().optional()
+    });
+  }
+}
+
 exports.getByID = {
   schema: () => {
     return joi.object().keys({
@@ -31,9 +41,9 @@ exports.login = {
 exports.update = {
   schema: () => {
     return joi.object().keys({
-      username: joi.string().max(60).required(),
+      username: joi.string().max(60),
       role_id: joi.number().positive(),
-      tag: joi.array().optional(),
+      tag: joi.string().optional(),
       id: joi.number().positive().required()
     });
   }

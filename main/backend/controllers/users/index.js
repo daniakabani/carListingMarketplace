@@ -5,16 +5,27 @@ const UsersService = require('daniakabani/services/users'),
     getByID: usersGetByIDSchema,
     delete: usersDeleteSchema,
     update: usersUpdateSchema,
-    login: usersLoginSchema
+    login: usersLoginSchema,
+    getAll: usersGetAllSchema
   } = require('daniakabani/schemas/users');
 
 exports.getAll = async (req, res) => {
-  const { include } = req.query;
+  const { include, page_size: pageSize, page: pageNumber, username } = req.query;
+  await schemaValidator(usersGetAllSchema, req.query);
   let getAllUsers = await UsersService.getAll({
-    include
+    include,
+    page: pageNumber,
+    page_size: pageSize,
+    username
   });
   res.status(200);
-  return getAllUsers;
+  return {
+    ...getAllUsers,
+    total: getAllUsers.total,
+    page_size: pageSize,
+    page: pageNumber,
+    page_count: Math.ceil(getAllUsers.total / pageSize)
+  };
 };
 
 exports.create = async (req, res) => {

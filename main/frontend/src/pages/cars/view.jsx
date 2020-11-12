@@ -1,7 +1,7 @@
 import React from "react";
 
-const UsersView = () => {
+const CarView = () => {
   return <h1>users View here</h1>;
 }
 
-export default UsersView;
+export default CarView;

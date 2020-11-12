@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import NavStyle from "./navBar.style";
+import { useLocation } from "react-router-dom";
+import context from "../../providers/context";
 
 const NavBar = () => {
+  const location = useLocation();
+  const [{ role }] = useContext(context);
   return (
-    <nav>
-      <ul>
-        <li>
-          <NavLink to="/users">Users</NavLink>
-        </li>
-        <li>
-          <NavLink to="/cars">Cars</NavLink>
-        </li>
-        <li>
-          <NavLink to="/listings">Listings</NavLink>
-        </li>
-      </ul>
-    </nav>
+    <NavStyle>
+      <nav>
+        <ul>
+          {role === "super_user" && (
+            <li>
+              <NavLink className={location.pathname === "/users" ? "active" : ""} to="/users">Users</NavLink>
+            </li>
+          )}
+          <li>
+            <NavLink className={location.pathname === "/cars" ? "active" : ""} to="/cars">Cars</NavLink>
+          </li>
+          <li>
+            <NavLink className={location.pathname === "/listings" ? "active" : ""} to="/listings">Listings</NavLink>
+          </li>
+        </ul>
+      </nav>
+    </NavStyle>
   )
 };
 

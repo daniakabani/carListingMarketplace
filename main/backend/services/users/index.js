@@ -2,11 +2,15 @@ const UsersModel = require('daniakabani/models/users'),
   bcrypt = require('bcrypt'),
   { randomGenerator } = require('daniakabani/helpers');
 
-exports.getAll = () => {
-  return UsersModel.query()
+exports.getAll = ({ page = 1, page_size = 10, username = null }) => {
+  let result = UsersModel.query()
     .allowGraph('role')
     .withGraphFetched('role')
     .whereNull('users.deleted_at');
+  username && result.where('username', 'like', username);
+  result.orderBy('id', 'asc');
+  result.page(Number(page) - 1, page_size);
+  return result;
 };
 
 exports.getByID = ({ id }) => {
@@ -33,7 +37,7 @@ exports.login = async ({ username, password }) => {
   let user = await UsersModel.query().whereNull('users.deleted_at').where('username', username).throwIfNotFound();
   let validatePassword = bcrypt.compareSync(password, user[0].password);
   if (validatePassword) {
-    return true;
+    return user;
   } else {
     throw {
       errorCode: "unauthorised",

@@ -1,11 +1,19 @@
 import React from 'react';
 import Routes from "./routes";
+import Context from "./providers/context";
+import useStore from "./hooks/useStore";
+import GlobalStyle from "./global.style";
 
-function App() {
+const App = () => {
+  const [store, handler] = useStore();
   return (
-    <div className="App">
-      <Routes />
-    </div>
+    <Context.Provider value={[store, handler]}>
+      <GlobalStyle>
+        <div className="App">
+          <Routes />
+        </div>
+      </GlobalStyle>
+    </Context.Provider>
   );
 }
 
