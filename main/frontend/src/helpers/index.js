@@ -31,7 +31,7 @@ const FormSerializer = form => {
 }
 
 const confirmMessage = message => {
-  return confirm(message)
+  return window.confirm(message);
 }
 
 export { HttpClient, FormSerializer, confirmMessage };

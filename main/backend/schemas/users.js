@@ -16,7 +16,7 @@ exports.getAll = {
     return joi.object().keys({
       username: joi.string().optional().allow(''),
       page: joi.number().positive().optional(),
-      page_size: joi.number().positive().optional().allow(''),
+      page_size: joi.number().positive().optional().allow(null, ''),
       admins: joi.boolean().optional(),
       users: joi.boolean().optional()
     });

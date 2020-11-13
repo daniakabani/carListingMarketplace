@@ -53,7 +53,6 @@ exports.schemaValidator = async (schema, body) => {
   try {
     return await schema.schema().validateAsync(body, { abortEarly: false });
   } catch (e) {
-    console.log(e);
     let error = e.details;
     let errorArray = [];
     error.map(error => {

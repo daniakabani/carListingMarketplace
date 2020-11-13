@@ -32,8 +32,7 @@ const UsersCreate = () => {
       role_id: selectedRole,
       tag: JSON.stringify(tags) ?? ''
     })
-      .then(res => {
-        console.log(res);
+      .then(() => {
         history.push('/users');
       })
       .catch(e => console.error(e));

@@ -41,7 +41,7 @@ exports.getAll = {
   schema: () => {
     return joi.object().keys({
       include: joi.string().valid('car').optional(),
-      page: joi.number().positive().optional().allow(''),
+      page: joi.number().positive().optional().allow(null, ''),
       page_size: joi.number().optional().allow('')
     })
   }
