@@ -54,7 +54,7 @@ exports.getAll = {
   schema: () => {
     return joi.object().keys({
       brand: joi.string().optional().allow(''),
-      page: joi.number().positive().optional(),
+      page: joi.number().positive().optional().allow(''),
       page_size: joi.number().positive().optional()
     })
   }

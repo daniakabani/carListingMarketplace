@@ -1,10 +1,9 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getCarByID } from "../../services/cars";
 import { useParams } from "react-router-dom";
-import context from "../../providers/context";
+import { Link } from "react-router-dom";
 
 const CarView = () => {
-  const [{ role }] = useContext(context);
   const [state, setState] = useState({
     isLoading: true,
     data: null
@@ -48,7 +47,7 @@ const CarView = () => {
             <li><span>brand:</span>{data?.brand}</li>
             <li><span>Model:</span>{data?.model}</li>
             <li><span>Price:</span>{data?.price}RM</li>
-            <li><span>Owner:</span>{data?.owner}</li>
+            <li><span>Owner:</span><Link to={`/users/${data?.user_id}`}>{data?.owner}</Link></li>
             <li><span>Year:</span>{data?.year}</li>
             <li><span>Lat:</span>{data?.lat}</li>
             <li><span>Lng:</span>{data?.lng}</li>

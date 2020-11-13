@@ -35,12 +35,11 @@ exports.create = ({ brand, model, year, day_price, featured, geo_location, user_
 };
 
 exports.delete = async ({ id }) => {
-  const user = await CarsModel.query().whereNull('cars.deleted_at').findById(id).throwIfNotFound();
+  await CarsModel.query().whereNull('cars.deleted_at').findById(id).throwIfNotFound();
   return CarsModel.query()
     .whereNull('cars.deleted_at')
     .findById(id)
     .patch({
-      name: `${user.name}_DELETED_${await randomGenerator()}`,
       deleted_at: new Date()
     });
 };

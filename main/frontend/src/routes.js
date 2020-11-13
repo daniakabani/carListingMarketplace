@@ -3,14 +3,18 @@ import { Route, Switch, BrowserRouter as Router, Redirect } from "react-router-d
 import PrivateRoute from "./pages/privateRoute";
 import NotFount from "./pages/404";
 import LoginPage from "./pages/login";
-import UsersList from "./pages/users/listings";
+import UsersList from "./pages/users/list";
 import UsersCreate from "./pages/users/create";
 import UsersEdit from "./pages/users/edit";
 import UsersView from "./pages/users/view";
-import CarList from "./pages/cars/listings";
+import CarList from "./pages/cars/list";
 import CarView from "./pages/cars/view";
 import CarCreate from "./pages/cars/create";
 import CarEdit from "./pages/cars/edit";
+import CarAvailabilityList from "./pages/listings/list";
+import CreateListing from "./pages/listings/create";
+import ListingView from "./pages/listings/view";
+import EditListing from "./pages/listings/edit";
 
 const Routes = () => {
   return(
@@ -45,6 +49,18 @@ const Routes = () => {
         </PrivateRoute>
         <PrivateRoute exact path="/cars/:id/edit">
           <CarEdit />
+        </PrivateRoute>
+        <PrivateRoute exact path="/listings">
+          <CarAvailabilityList />
+        </PrivateRoute>
+        <PrivateRoute exact path="/listings/new">
+          <CreateListing />
+        </PrivateRoute>
+        <PrivateRoute exact path="/listings/:id/edit">
+          <EditListing />
+        </PrivateRoute>
+        <PrivateRoute exact path="/listings/:id">
+          <ListingView />
         </PrivateRoute>
         <Route>
           <NotFount />

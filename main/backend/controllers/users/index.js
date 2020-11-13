@@ -87,6 +87,7 @@ exports.delete = async (req, res) => {
   await UsersService.delete({ id });
   res.status(200);
   return {
-    message: 'successfully deleted user'
+    status: "success",
+    message: "successfully deleted car"
   };
 }

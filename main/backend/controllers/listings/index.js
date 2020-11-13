@@ -9,13 +9,21 @@ const ListingsService = require('daniakabani/services/listings'),
   } = require('daniakabani/schemas/listings');
 
 exports.getAll = async (req, res) => {
-  const { include } = req.query;
+  const { include, page: pageNumber, page_size: pageSize } = req.query;
   await schemaValidator(listingsGetAllSchema, req.params);
   let getAllListings = await ListingsService.getAll({
-    include
+    include,
+    page_size: pageSize,
+    page: pageNumber
   });
   res.status(200);
-  return getAllListings;
+  return {
+    ...getAllListings,
+    total: getAllListings.total,
+    page_size: pageSize,
+    page: pageNumber,
+    page_count: Math.ceil(getAllListings.total / pageSize)
+  };
 };
 
 exports.create = async (req, res) => {

@@ -30,9 +30,17 @@ const editCar = ({ id, body }) => {
   });
 }
 
+const deleteCar = (id) => {
+  return HttpClient({
+    path: `cars/${id}`,
+    method: 'DELETE'
+  });
+}
+
 export {
   getAllCars,
   getCarByID,
   createCar,
-  editCar
+  editCar,
+  deleteCar
 }

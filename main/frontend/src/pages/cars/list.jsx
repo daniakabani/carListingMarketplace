@@ -1,10 +1,11 @@
 import React, { useEffect, useContext, useState } from "react";
-import { getAllCars } from "../../services/cars";
+import { getAllCars, deleteCar } from "../../services/cars";
 import { useHistory, Link } from "react-router-dom";
 import context from "../../providers/context";
 import Button from "../../components/button";
 import ReactPaginate from "react-paginate";
 import InputField from "../../components/inputField";
+import { confirmMessage } from "../../helpers";
 
 let searchTimeOut;
 const CarList = () => {
@@ -19,10 +20,6 @@ const CarList = () => {
   });
   const { isLoading, data, currentPage, pageCount, brandFilter } = state;
   useEffect(() => {
-    setState({
-      ...state,
-      data: null
-    });
     getAllCars(brandFilter, currentPage)
       .then(response => {
         setState({
@@ -65,6 +62,33 @@ const CarList = () => {
     }, 400);
   };
 
+  const handleCarDelete = id => {
+    let confirm = confirmMessage(`confirm deleting ${id}?`);
+    if (confirm) {
+      setState({
+        ...state,
+        isLoading: true,
+        currentPage: null
+      });
+      Promise.resolve()
+        .then(async () => {
+          await deleteCar(id);
+        })
+        .then(() => {
+          setState({
+            ...state,
+            currentPage: 1
+          })
+        })
+        .catch(e => console.error(e))
+    } else {
+      setState({
+        ...state,
+        isLoading: false
+      })
+    }
+  }
+
   return (
     <div id="main">
       <div className="content">
@@ -93,23 +117,25 @@ const CarList = () => {
                   <div className="actions">
                     <Button onClick={() => handleRedirects(`cars/${item?.id}`)} success content="view"/>
                     {role === "super_user" && <Button onClick={() => handleRedirects(`cars/${item?.id}/edit`)} warning content="edit"/>}
-                    {role === "super_user" && <Button danger content="delete"/>}
+                    {role === "super_user" && <Button onClick={() => handleCarDelete(item?.id)} danger content="delete"/>}
                   </div>
                 </li>
               ))}
             </ul>)
           }
-          <ReactPaginate
-            previousLabel={'previous'}
-            nextLabel={'next'}
-            breakLabel={'...'}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={10}
-            activeClassName={'active'}
-            containerClassName="pagination"
-            onPageChange={({ selected }) => handlePageChange(selected)}
-          />
+          {!isLoading && (
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={10}
+              activeClassName={'active'}
+              containerClassName="pagination"
+              onPageChange={({ selected }) => handlePageChange(selected)}
+            />
+          )}
         </div>
       </div>
     </div>

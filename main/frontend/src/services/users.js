@@ -38,10 +38,18 @@ const updateUser = (id, body) => {
   })
 };
 
+const deleteUser = (id) => {
+  return HttpClient({
+    path: `users/${id}`,
+    method: "DELETE"
+  })
+}
+
 export {
   Login,
   getAllUsers,
   getUserByID,
   createUser,
-  updateUser
+  updateUser,
+  deleteUser
 }

@@ -40,7 +40,9 @@ exports.delete = {
 exports.getAll = {
   schema: () => {
     return joi.object().keys({
-      include: joi.string().valid('car').optional()
+      include: joi.string().valid('car').optional(),
+      page: joi.number().positive().optional().allow(''),
+      page_size: joi.number().optional().allow('')
     })
   }
 }

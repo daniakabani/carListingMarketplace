@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { getAllUsers } from "../../services/users";
+import { getAllUsers, deleteUser } from "../../services/users";
 import { useHistory, Link } from "react-router-dom";
 import context from "../../providers/context";
 import Button from "../../components/button";
@@ -7,6 +7,7 @@ import ReactPaginate from "react-paginate";
 import InputField from "../../components/inputField";
 import Toggle from "react-toggle";
 import "react-toggle/style.css"
+import { confirmMessage } from "../../helpers";
 
 let searchTimeOut;
 const UsersList = () => {
@@ -74,6 +75,33 @@ const UsersList = () => {
       ...state,
       [target]: value
     })
+  };
+
+  const handleUserDelete = id => {
+    let confirm = confirmMessage(`confirm deleting ${id}?`);
+    if (confirm) {
+      setState({
+        ...state,
+        isLoading: true,
+        currentPage: null
+      });
+      Promise.resolve()
+        .then(async () => {
+          await deleteUser(id);
+        })
+        .then(() => {
+          setState({
+            ...state,
+            currentPage: 1
+          })
+        })
+        .catch(e => console.error(e))
+    } else {
+      setState({
+        ...state,
+        isLoading: false
+      })
+    }
   }
 
   if (role === "super_user") {
@@ -115,23 +143,25 @@ const UsersList = () => {
                     <div className="actions">
                       <Button onClick={() => handleRedirects(`users/${item?.id}`)} success content="view"/>
                       <Button onClick={() => handleRedirects(`users/${item?.id}/edit`)} warning content="edit"/>
-                      <Button danger content="delete"/>
+                      <Button danger onClick={() => handleUserDelete(item?.id)} content="delete"/>
                     </div>
                   </li>
                 ))}
               </ul>)
             }
-            <ReactPaginate
-              previousLabel={'previous'}
-              nextLabel={'next'}
-              breakLabel={'...'}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={10}
-              activeClassName={'active'}
-              containerClassName="pagination"
-              onPageChange={({ selected }) => handlePageChange(selected)}
-            />
+            {!isLoading && (
+              <ReactPaginate
+                previousLabel={'previous'}
+                nextLabel={'next'}
+                breakLabel={'...'}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={10}
+                activeClassName={'active'}
+                containerClassName="pagination"
+                onPageChange={({ selected }) => handlePageChange(selected)}
+              />
+            )}
           </div>
         </div>
       </div>

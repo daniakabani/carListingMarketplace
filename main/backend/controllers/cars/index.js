@@ -77,5 +77,8 @@ exports.delete = async (req, res) => {
   await schemaValidator(carDeleteSchema, req.params);
   await CarsService.delete({ id });
   res.status(200);
-  return "successfully deleted car";
+  return {
+    status: "success",
+    message: "successfully deleted car"
+  };
 }

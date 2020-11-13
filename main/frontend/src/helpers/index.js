@@ -30,5 +30,8 @@ const FormSerializer = form => {
   );
 }
 
+const confirmMessage = message => {
+  return confirm(message)
+}
 
-export { HttpClient, FormSerializer };
+export { HttpClient, FormSerializer, confirmMessage };

@@ -166,6 +166,9 @@ const GlobalStyle = styled.div`{
           list-style: none;
           li {
             padding: 10px 0;
+            a {
+              text-decoration: underline;
+            }
             span {
               font-weight: bold;
               min-width: 150px;

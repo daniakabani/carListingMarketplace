@@ -1,11 +1,13 @@
-const ListingsModel = require('daniakabani/models/listings'),
-  { randomGenerator } = require('daniakabani/helpers')
+const ListingsModel = require('daniakabani/models/listings');
 
-exports.getAll = ({ include }) => {
-  return ListingsModel.query()
+exports.getAll = ({ include, page, page_size }) => {
+  let result =  ListingsModel.query()
     .allowGraph('[car]')
     .withGraphFetched(include)
     .whereNull('listings.deleted_at');
+  result.orderBy('id', 'asc');
+  result.page(Number(page) - 1, page_size);
+  return result;
 };
 
 exports.getByID = ({ id }) => {
