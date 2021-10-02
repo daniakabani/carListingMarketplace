@@ -6,13 +6,13 @@ export default function stateReducer(state, actions) {
         state = {
           ...state,
           allowLogin: true,
-          role: action.value.role || "",
+          role: action.value.role || ''
         };
         break;
       case "logout":
         state = {
           allowLogin: false,
-          role: "",
+          role: ''
         };
         break;
       default:

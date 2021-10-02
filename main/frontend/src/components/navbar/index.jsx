@@ -13,34 +13,19 @@ const NavBar = () => {
         <ul>
           {role === "super_user" && (
             <li>
-              <NavLink
-                className={location.pathname === "/users" ? "active" : ""}
-                to="/users"
-              >
-                Users
-              </NavLink>
+              <NavLink className={location.pathname === "/users" ? "active" : ""} to="/users">Users</NavLink>
             </li>
           )}
           <li>
-            <NavLink
-              className={location.pathname === "/cars" ? "active" : ""}
-              to="/cars"
-            >
-              Cars
-            </NavLink>
+            <NavLink className={location.pathname === "/cars" ? "active" : ""} to="/cars">Cars</NavLink>
           </li>
           <li>
-            <NavLink
-              className={location.pathname === "/tasks" ? "active" : ""}
-              to="/listings"
-            >
-              Listings
-            </NavLink>
+            <NavLink className={location.pathname === "/listings" ? "active" : ""} to="/listings">Listings</NavLink>
           </li>
         </ul>
       </nav>
     </NavStyle>
-  );
+  )
 };
 
 export default NavBar;

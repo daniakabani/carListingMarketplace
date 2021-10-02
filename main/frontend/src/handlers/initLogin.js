@@ -1,4 +1,4 @@
-export default function (value) {
+export default function(value) {
   const { dispatch } = this;
   dispatch([{ type: "initLogin", value }]);
 }

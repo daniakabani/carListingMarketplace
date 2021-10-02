@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
-const ButtonStyle = styled.div`
-   {
-    .DA-button {
-      &.success {
+const ButtonStyle = styled.div`{
+  .DA-button {
+    &.success {
         button {
           background-color: #2ecc71;
         }
@@ -18,22 +17,21 @@ const ButtonStyle = styled.div`
           background-color: darkred;
         }
       }
-      button {
-        color: #fff;
-        background-color: #057bff;
-        border-radius: 20px;
-        border: none;
-        padding: 10px;
-        box-shadow: unset;
-        outline: none;
-        cursor: pointer;
-        transition: all ease 0.3s;
-        &:hover {
-          background-color: #8e44ad;
-        }
+    button {
+      color: #fff;
+      background-color: #057bff;
+      border-radius: 20px;
+      border: none;
+      padding: 10px;
+      box-shadow: unset;
+      outline: none;
+      cursor: pointer;
+      transition: all ease 0.3s;
+      &:hover {
+        background-color: #8e44ad;
       }
     }
   }
-`;
+}`;
 
 export default ButtonStyle;

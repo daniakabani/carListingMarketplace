@@ -5,11 +5,11 @@ const HttpClient = async ({ method, path, body = null }) => {
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
-      body: body && JSON.stringify({ ...body }),
+      body: body && JSON.stringify({ ...body })
     });
     let jsonResult = await result?.json();
     if (jsonResult?.error) {
@@ -17,21 +17,21 @@ const HttpClient = async ({ method, path, body = null }) => {
     } else {
       return jsonResult;
     }
-  } catch (e) {
+  } catch(e) {
     throw e;
   }
 };
 
-const FormSerializer = (form) => {
+const FormSerializer = form => {
   return Object.fromEntries(
     Object.values(form)
       .filter(({ value, name }) => typeof value !== "undefined" && name)
       .map(({ name, value }) => [name, value])
   );
-};
+}
 
-const confirmMessage = (message) => {
+const confirmMessage = message => {
   return window.confirm(message);
-};
+}
 
 export { HttpClient, FormSerializer, confirmMessage };

@@ -8,9 +8,7 @@ export default function PrivateRoute({ children, ...props }) {
   return (
     <>
       <NavBar />
-      <Route {...props}>
-        {allowLogin ? children : <Redirect to={{ pathname: "/login" }} />}
-      </Route>
+      <Route {...props}>{allowLogin ? children : <Redirect to={{ pathname: "/login" }} />}</Route>
     </>
   );
 }

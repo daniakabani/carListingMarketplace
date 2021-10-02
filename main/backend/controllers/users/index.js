@@ -1,23 +1,16 @@
-const UsersService = require("daniakabani/services/users"),
-  { schemaValidator } = require("daniakabani/helpers"),
+const UsersService = require('daniakabani/services/users'),
+  { schemaValidator } = require('daniakabani/helpers'),
   {
     create: usersCreateSchema,
     getByID: usersGetByIDSchema,
     delete: usersDeleteSchema,
     update: usersUpdateSchema,
     login: usersLoginSchema,
-    getAll: usersGetAllSchema,
-  } = require("daniakabani/schemas/users");
+    getAll: usersGetAllSchema
+  } = require('daniakabani/schemas/users');
 
 exports.getAll = async (req, res) => {
-  const {
-    include,
-    page_size: pageSize,
-    page: pageNumber,
-    username,
-    admins,
-    users,
-  } = req.query;
+  const { include, page_size: pageSize, page: pageNumber, username, admins, users } = req.query;
   await schemaValidator(usersGetAllSchema, req.query);
   let getAllUsers = await UsersService.getAll({
     include,
@@ -25,7 +18,7 @@ exports.getAll = async (req, res) => {
     page_size: pageSize,
     username,
     admins,
-    users,
+    users
   });
   res.status(200);
   return {
@@ -33,33 +26,28 @@ exports.getAll = async (req, res) => {
     total: getAllUsers.total,
     page_size: pageSize,
     page: pageNumber,
-    page_count: Math.ceil(getAllUsers.total / pageSize),
+    page_count: Math.ceil(getAllUsers.total / pageSize)
   };
 };
 
 exports.create = async (req, res) => {
-  const {
-    username = null,
-    tag = null,
-    role_id = null,
-    password = null,
-  } = req.body;
+  const { username = null, tag = null, role_id = null, password = null } = req.body;
   await schemaValidator(usersCreateSchema, req.body);
   let createUser = await UsersService.create({
     username,
     tag,
     role_id,
-    password,
+    password
   });
   res.status(201);
-  return createUser;
+  return createUser
 };
 
 exports.getByID = async (req, res) => {
   const { id } = req.params;
   await schemaValidator(usersGetByIDSchema, req.params);
   let getUserByID = await UsersService.getByID({
-    id,
+    id
   });
   res.status(200);
   return getUserByID;
@@ -70,7 +58,7 @@ exports.login = async (req, res) => {
   await schemaValidator(usersLoginSchema, req.body);
   let login = await UsersService.login({
     username,
-    password,
+    password
   });
   res.status(200);
   return login;
@@ -81,7 +69,7 @@ exports.update = async (req, res) => {
   const { username = null, tag = null, role_id = null } = req.body;
   await schemaValidator(usersUpdateSchema, {
     ...req.body,
-    ...req.params,
+    ...req.params
   });
   let updateUser = await UsersService.update({
     id,
@@ -100,6 +88,6 @@ exports.delete = async (req, res) => {
   res.status(200);
   return {
     status: "success",
-    message: "successfully deleted car",
+    message: "successfully deleted car"
   };
-};
+}

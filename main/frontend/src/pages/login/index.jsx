@@ -10,7 +10,7 @@ import Context from "../../providers/context";
 const LoginPage = () => {
   const [, { initLogin }] = useContext(Context);
   const history = useHistory();
-  const handleLogin = (event) => {
+  const handleLogin = event => {
     event.preventDefault();
     const { username, password } = FormSerializer(event.currentTarget);
     let user, roleName;
@@ -18,7 +18,7 @@ const LoginPage = () => {
       .then(async () => {
         user = await Login({
           username,
-          password,
+          password
         });
       })
       .then(async () => {
@@ -28,35 +28,25 @@ const LoginPage = () => {
       .then(() => {
         initLogin({
           role: roleName,
-          allowLogin: true,
+          allowLogin: true
         });
-        history.push("/users");
+        history.push('/users');
       })
-      .catch((e) => console.error(e));
+      .catch(e => console.error(e));
   };
 
   return (
     <div id="main">
       <div className="form-wrapper">
         <h1>please login to continue</h1>
-        <form onSubmit={(e) => handleLogin(e)}>
-          <InputField
-            placeHolder="Your username"
-            name="username"
-            type="text"
-            required
-          />
-          <InputField
-            placeHolder="Your password"
-            name="password"
-            type="password"
-            required
-          />
-          <Button content="Login" />
+        <form onSubmit={e => handleLogin(e)}>
+          <InputField placeHolder="Your username" name="username" type="text" required/>
+          <InputField placeHolder="Your password" name="password" type="password" required/>
+          <Button content="Login"/>
         </form>
       </div>
     </div>
-  );
+  )
 };
 
 export default LoginPage;

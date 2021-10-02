@@ -1,17 +1,20 @@
 import { HttpClient } from "../helpers/index";
 
-const getRoleByID = (id) => {
+const getRoleByID = id => {
   return HttpClient({
     path: `roles/${id}`,
-    method: "GET",
-  });
+    method: 'GET'
+  })
 };
 
 const getAllRoles = () => {
   return HttpClient({
     path: "roles",
-    method: "GET",
-  });
-};
+    method: 'GET'
+  })
+}
 
-export { getRoleByID, getAllRoles };
+export {
+  getRoleByID,
+  getAllRoles
+};
