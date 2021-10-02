@@ -31,9 +31,9 @@
   "dependencies": {
     "bcrypt": "^5.0.0",
     "daniakabani": "./main/backend",
-    "dotenv": "^8.6.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "knex": "^0.21.21",
+    "knex": "^0.95.11",
     "objection": "^2.2.16",
     "pg": "^8.7.1"
   },
