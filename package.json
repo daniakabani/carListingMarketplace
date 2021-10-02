@@ -29,16 +29,16 @@
   },
   "homepage": "https://github.com/daniakabani/carListingMarketplace#readme",
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
     "bcrypt": "^5.0.0",
     "daniakabani": "./main/backend",
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
-    "knex": "^0.21.12",
-    "objection": "^2.2.3",
-    "pg": "^8.4.2"
+    "knex": "^0.21.21",
+    "objection": "^2.2.16",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "joi": "^17.4.2",
+    "nodemon": "^2.0.13"
   }
 }
