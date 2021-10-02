@@ -1,7 +1,7 @@
-const Model = require('./base');
+const Model = require("./base");
 
 class Roles extends Model {
-  static tableName = 'roles';
+  static tableName = "roles";
 
   static getTableName() {
     return this.tableName;
@@ -12,19 +12,18 @@ class Roles extends Model {
   }
 
   static get relationMappings() {
-    const User = require('./users');
+    const User = require("./users");
     return {
       user: {
         relation: Model.HasOneRelation,
         modelClass: User,
         join: {
-          from: 'roles.id',
-          to: 'users.roles_id'
-        }
-      }
-    }
+          from: "roles.id",
+          to: "users.roles_id",
+        },
+      },
+    };
   }
-
 }
 
 module.exports = Roles;

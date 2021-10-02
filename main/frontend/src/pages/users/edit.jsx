@@ -8,7 +8,7 @@ import Select from "react-select";
 import Tags from "@yaireo/tagify/dist/react.tagify";
 import { FormSerializer } from "../../helpers";
 import "@yaireo/tagify/dist/tagify.css";
-import { useHistory, useParams } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom";
 
 const UserEdit = () => {
   const [{ role }] = useContext(context);
@@ -16,85 +16,84 @@ const UserEdit = () => {
     userData: null,
     roles: [],
     isLoading: true,
-    defaultRole: null
+    defaultRole: null,
   });
   const [selectState, setSelect] = useState({
     selectedRole: null,
-    tags: []
+    tags: [],
   });
   const { roles, userData, isLoading, defaultRole } = state;
   const { selectedRole, tags } = selectState;
   const history = useHistory();
   const { id } = useParams();
 
-  const handleFormSubmit = e => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     const { username } = FormSerializer(e.currentTarget);
     updateUser(id, {
       username,
       role_id: selectedRole ?? userData.role_id,
-      tag: tags.length ? JSON.stringify(tags) : userData.tags
+      tag: tags.length ? JSON.stringify(tags) : userData.tags,
     })
       .then(() => {
         history.push(`/users/${id}`);
       })
-      .catch(e => console.error(e));
+      .catch((e) => console.error(e));
   };
 
   useEffect(() => {
     let userInfo, rolesData;
     Promise.resolve()
       .then(async () => {
-        let user = await getUserByID(id)
+        let user = await getUserByID(id);
         userInfo = {
           name: user?.username,
           role_id: user?.role_id,
-          tags: user?.tag
-        }
+          tags: user?.tag,
+        };
       })
       .then(async () => {
         let roles = await getAllRoles();
         let tmpRolesArray = [];
-        roles?.map(role => {
+        roles?.map((role) => {
           return tmpRolesArray.push({
             label: `${role?.id}- ${role?.name}`,
-            value: role?.id
-          })
-        })
+            value: role?.id,
+          });
+        });
         rolesData = tmpRolesArray;
       })
-      .catch(e => console.error(e))
+      .catch((e) => console.error(e))
       .finally(() => {
         setState({
           ...state,
           userData: userInfo,
           roles: rolesData,
-          isLoading: false
-        })
-      })
+          isLoading: false,
+        });
+      });
   }, []);
-
 
   const handleRolesSelect = (e) => {
     setSelect({
       ...selectState,
-      selectedRole: Number(e.value)
-    })
-  }
+      selectedRole: Number(e.value),
+    });
+  };
 
   const handleTagsSelect = (e) => {
     if (e.target.value.length) {
       let parsedTags = JSON.parse(e.target.value);
       let array = [];
-      parsedTags.map(tag => {
+      parsedTags.map((tag) => {
         array.push(tag.value);
       });
       setSelect({
         ...selectState,
-        tags: array
-      })
+        tags: array,
+      });
     }
-  }
+  };
 
   if (role === "super_user") {
     if (isLoading) {
@@ -104,18 +103,22 @@ const UserEdit = () => {
             <h1>Loading...</h1>
           </div>
         </div>
-      )
+      );
     } else {
       return (
         <div id="main">
           <div className="form-wrapper">
             <h1>update user info</h1>
-            <form onSubmit={e => handleFormSubmit(e)}>
-              <InputField name="username" defaultValue={userData?.name} required/>
+            <form onSubmit={(e) => handleFormSubmit(e)}>
+              <InputField
+                name="username"
+                defaultValue={userData?.name}
+                required
+              />
               <Select
                 placeholder="Roles"
                 options={roles ?? []}
-                onChange={e => handleRolesSelect(e)}
+                onChange={(e) => handleRolesSelect(e)}
                 className="select"
                 defaultValue={roles[userData?.role_id - 1] ?? []}
               />
@@ -123,15 +126,15 @@ const UserEdit = () => {
                 label="Tags"
                 placeholder="User Tags"
                 name="tags"
-                onChange={e => handleTagsSelect(e)}
+                onChange={(e) => handleTagsSelect(e)}
                 className="tags"
-                value={userData?.tags ?? ''}
+                value={userData?.tags ?? ""}
               />
-              <Button content="Update"/>
+              <Button content="Update" />
             </form>
           </div>
         </div>
-      )
+      );
     }
   } else {
     return (
@@ -142,8 +145,8 @@ const UserEdit = () => {
           </header>
         </div>
       </div>
-    )
+    );
   }
-}
+};
 
 export default UserEdit;

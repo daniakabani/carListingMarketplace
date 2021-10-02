@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Routes from "./routes";
 import Context from "./providers/context";
 import useStore from "./hooks/useStore";
@@ -15,6 +15,6 @@ const App = () => {
       </GlobalStyle>
     </Context.Provider>
   );
-}
+};
 
 export default App;

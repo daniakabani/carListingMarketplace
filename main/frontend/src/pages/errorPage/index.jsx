@@ -1,6 +1,6 @@
 import React from "react";
 
-const ErrorPage = ({message}) => {
+const ErrorPage = ({ message }) => {
   return <h1>{message}</h1>;
 };
 

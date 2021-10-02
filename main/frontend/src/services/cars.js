@@ -3,44 +3,38 @@ import { HttpClient } from "../helpers";
 const getAllCars = (brand = "", page = 1) => {
   return HttpClient({
     path: `cars?page_size=10&page=${page}&brand=${brand}`,
-    method: 'GET'
+    method: "GET",
   });
 };
 
-const getCarByID = id => {
+const getCarByID = (id) => {
   return HttpClient({
     path: `cars/${id}`,
-    method: 'GET'
+    method: "GET",
   });
 };
 
-const createCar = body => {
+const createCar = (body) => {
   return HttpClient({
     path: `cars`,
-    method: 'POST',
-    body
+    method: "POST",
+    body,
   });
 };
 
 const editCar = ({ id, body }) => {
   return HttpClient({
     path: `cars/${id}`,
-    method: 'POST',
-    body
+    method: "POST",
+    body,
   });
-}
+};
 
 const deleteCar = (id) => {
   return HttpClient({
     path: `cars/${id}`,
-    method: 'DELETE'
+    method: "DELETE",
   });
-}
+};
 
-export {
-  getAllCars,
-  getCarByID,
-  createCar,
-  editCar,
-  deleteCar
-}
+export { getAllCars, getCarByID, createCar, editCar, deleteCar };

@@ -3,13 +3,21 @@ import propTypes from "prop-types";
 import InputFieldStyle from "./input.style";
 import classNames from "classnames";
 
-const InputField = props => {
-  const { name, type = "text", onChange, required, placeHolder, lite, defaultValue } = props;
+const InputField = (props) => {
+  const {
+    name,
+    type = "text",
+    onChange,
+    required,
+    placeHolder,
+    lite,
+    defaultValue,
+  } = props;
   const classes = classNames("DA-input-field", {
-    "lite": lite
-  })
+    lite: lite,
+  });
 
-  return(
+  return (
     <InputFieldStyle>
       <div className={classes}>
         <input
@@ -22,7 +30,7 @@ const InputField = props => {
         />
       </div>
     </InputFieldStyle>
-  )
+  );
 };
 
 InputField.propTypes = {
@@ -32,7 +40,7 @@ InputField.propTypes = {
   required: propTypes.bool,
   placeHolder: propTypes.string,
   lite: propTypes.bool,
-  defaultValue: propTypes.string
-}
+  defaultValue: propTypes.string,
+};
 
 export default InputField;

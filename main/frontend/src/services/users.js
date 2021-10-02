@@ -1,55 +1,54 @@
 import { HttpClient } from "../helpers/index";
 
-const Login = body => {
+const Login = (body) => {
   return HttpClient({
-    path: 'users/login',
-    method: 'POST',
-    body
-  })
+    path: "users/login",
+    method: "POST",
+    body,
+  });
 };
 
-const getAllUsers = ({ username = "", page = 1, admins = false, users = false, page_size = 10 }) => {
+const getAllUsers = ({
+  username = "",
+  page = 1,
+  admins = false,
+  users = false,
+  page_size = 10,
+}) => {
   return HttpClient({
     path: `users?page_size=${page_size}&page=${page}&username=${username}&admins=${admins}&users=${users}`,
-    method: 'GET'
+    method: "GET",
   });
 };
 
-const getUserByID = id => {
+const getUserByID = (id) => {
   return HttpClient({
     path: `users/${id}`,
-    method: 'GET'
+    method: "GET",
   });
 };
 
-const createUser = body => {
+const createUser = (body) => {
   return HttpClient({
     path: "users",
     method: "POST",
-    body
-  })
+    body,
+  });
 };
 
 const updateUser = (id, body) => {
   return HttpClient({
     path: `users/${id}`,
     method: "POST",
-    body
-  })
+    body,
+  });
 };
 
 const deleteUser = (id) => {
   return HttpClient({
     path: `users/${id}`,
-    method: "DELETE"
-  })
-}
+    method: "DELETE",
+  });
+};
 
-export {
-  Login,
-  getAllUsers,
-  getUserByID,
-  createUser,
-  updateUser,
-  deleteUser
-}
+export { Login, getAllUsers, getUserByID, createUser, updateUser, deleteUser };

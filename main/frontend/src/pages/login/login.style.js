@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
-const InputFieldStyle = styled.div`{
-  
-}`
+const InputFieldStyle = styled.div`
+   {
+  }
+`;

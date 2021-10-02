@@ -1,4 +1,4 @@
-const joi = require('@hapi/joi');
+const joi = require("@hapi/joi");
 
 exports.create = {
   schema: () => {
@@ -6,29 +6,29 @@ exports.create = {
       username: joi.string().max(60).required(),
       password: joi.string().max(60).required(),
       role_id: joi.number().positive().required(),
-      tag: joi.string().optional()
+      tag: joi.string().optional(),
     });
-  }
+  },
 };
 
 exports.getAll = {
   schema: () => {
     return joi.object().keys({
-      username: joi.string().optional().allow(''),
+      username: joi.string().optional().allow(""),
       page: joi.number().positive().optional(),
-      page_size: joi.number().positive().optional().allow(null, ''),
+      page_size: joi.number().positive().optional().allow(null, ""),
       admins: joi.boolean().optional(),
-      users: joi.boolean().optional()
+      users: joi.boolean().optional(),
     });
-  }
-}
+  },
+};
 
 exports.getByID = {
   schema: () => {
     return joi.object().keys({
-      id: joi.number().required()
+      id: joi.number().required(),
     });
-  }
+  },
 };
 
 exports.login = {
@@ -36,9 +36,9 @@ exports.login = {
     return joi.object().keys({
       username: joi.string().max(60).required(),
       password: joi.string().max(60).required(),
-    })
-  }
-}
+    });
+  },
+};
 
 exports.update = {
   schema: () => {
@@ -46,15 +46,15 @@ exports.update = {
       username: joi.string().max(60),
       role_id: joi.number().positive(),
       tag: joi.string().optional(),
-      id: joi.number().positive().required()
+      id: joi.number().positive().required(),
     });
-  }
+  },
 };
 
 exports.delete = {
   schema: () => {
     return joi.object().keys({
-      id: joi.number().required()
+      id: joi.number().required(),
     });
-  }
-}
+  },
+};
